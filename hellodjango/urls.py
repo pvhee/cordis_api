@@ -1,8 +1,9 @@
 from django.conf.urls import patterns, include, url
 from rest_framework import routers
-from quickstart import views
-from django.views.generic import DetailView, ListView
+from rest_framework.urlpatterns import format_suffix_patterns
 from cordis.models import Project
+
+from cordis import views
 
 
 router = routers.DefaultRouter()
@@ -27,6 +28,13 @@ router = routers.DefaultRouter()
 
 
 urlpatterns = patterns('cordis.views',
-    url(r'^projects/$', 'project_list'),
-    url(r'^projects/(?P<pk>[0-9]+)/$', 'project_detail'),
+	url(r'^projects/$', views.ProjectList.as_view()),
+    # url(r'^projects/$', 'project_list'),
+    url(r'^projects/(?P<pk>[0-9]+)/$', views.ProjectDetail.as_view()),
+
+    # @todo fix this, not sure why api_root doesn't work?
+    # url(r'^$', 'api_root'),
+    url(r'^$', views.ProjectList.as_view()),
 )
+
+urlpatterns = format_suffix_patterns(urlpatterns)
