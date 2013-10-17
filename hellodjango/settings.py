@@ -131,6 +131,7 @@ INSTALLED_APPS = (
     'cordis',
     'parse_cordis',
     # 'json_field',
+    'south', # for easy migrations
 )
 
 REST_FRAMEWORK = {
