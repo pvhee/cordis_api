@@ -7,8 +7,8 @@ from cordis import views
 router = routers.DefaultRouter()
 
 urlpatterns = patterns('cordis.views',
-	url(r'^projects/$', views.ProjectList.as_view()),
-    url(r'^projects/(?P<pk>[0-9]+)/$', views.ProjectDetail.as_view()),
+	url(r'^cordis/1/projects/$', views.ProjectList.as_view()),
+    url(r'^cordis/1/projects/(?P<pk>[0-9]+)/$', views.ProjectDetail.as_view()),
 
     # @todo fix this, not sure why api_root doesn't work?
     # url(r'^$', 'api_root'),

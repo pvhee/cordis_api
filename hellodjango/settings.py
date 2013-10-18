@@ -166,10 +166,7 @@ LOGGING = {
     }
 }
 
-# From Heroku, https://devcenter.heroku.com/articles/getting-started-with-django
-# Parse database configuration from $DATABASE_URL
-import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
+
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -200,3 +197,20 @@ STATICFILES_DIRS = (
 #         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
 #     ]
 # }
+
+# all settings for the production server, 
+# and settings common to all development machines eg. 
+# INSTALLED_APPS, TEMPLATE_DIRS, MIDDLEWARE_CLASSES etc.
+
+# Import local_settings at the very bottom of the file
+# Use try|except block since we won't have this on the production server, 
+# only on dev machines
+try:
+    from local_settings import *
+except ImportError:
+    # For Heroku, https://devcenter.heroku.com/articles/getting-started-with-django
+    # Parse database configuration from $DATABASE_URL
+    import dj_database_url
+    DATABASES['default'] =  dj_database_url.config()
+    pass
+
