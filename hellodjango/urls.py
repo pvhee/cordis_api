@@ -12,7 +12,7 @@ urlpatterns = patterns('cordis.views',
 
     # @todo fix this, not sure why api_root doesn't work?
     # url(r'^$', 'api_root'),
-    url(r'^$', views.ProjectList.as_view()),
+    # url(r'^$', views.ProjectList.as_view()),
 )
 
 urlpatterns = format_suffix_patterns(urlpatterns)
