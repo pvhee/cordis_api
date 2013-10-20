@@ -10,9 +10,11 @@ from rest_framework.reverse import reverse
 from cordis.models import Project
 from cordis.serializers import ProjectSerializer
 
+import logging
+
 class ProjectList(APIView):
     """
-    List all snippets, or create a new snippet.
+    List all projects in the local cache
     """
     def get(self, request, format=None):
         projects = Project.objects.all()
@@ -24,24 +26,102 @@ class ProjectDetail(APIView):
     Retrieves project data, or parses the project data from <a href="http://cordis.europa.eu" target="_blank">Cordis</a> if not yet available in the local data storage.
     """	
 
-    def get_object(self, pk):
+    def get_object(self, pk, reset):
+
         try:
+            if reset:
+                raise Project.DoesNotExist
             return Project.objects.get(pk=pk)
+
         except Project.DoesNotExist:
-	    	try:
-				# Parse on the fly now
-				project = Project(rcn=pk)
-				project.parse_cordis()
-				project.save()
-				return project
-	    	except:
-	    		raise Http404
+            # try:
+            project = Project(rcn=pk)
+            project.parse_cordis()
+            project.save()
+            return project
+            # except:
+                # raise Http404
+
+    #     except Project.DoesNotExist:
+    #         project
+
+    #     try:
+    #         try:
+    #             project = Project.objects.get(pk=pk)
+    #             if reset:
+    #                 project.parse_cordis()
+    #                 project.save()
+                
+    #             # return project
+
+    #         except Project.DoesNotExist:
+				# # Parse on the fly now
+				# project = Project(rcn=pk)
+				# project.parse_cordis()
+				# project.save()
+				# # return project
+
+    #         return project
+
+	   #  except:
+	   #     raise Http404
 
     def get(self, request, pk, format=None):
-        project = self.get_object(pk)
+
+        # if request.GET.get('reset', None):
+
+        # logging.debug(p)
+
+        project = self.get_object(pk, request.GET.get('reset', None))
         serializer = ProjectSerializer(project)
         return Response(serializer.data)
 
+class Search(APIView):
+    """
+    Retrieves detailed project information from a Cordis search. Add the search key obtained in the URL as the parameter to this search.
+    """ 
+
+    def get(self, request, pk, count=10, format=None):
+        # try:
+        from parse_cordis import listing
+        data = listing.parse(pk, count)
+
+        projects = list()
+
+        # loop through data and save new project
+        for rcn in data:
+
+            # logging.debug(rcn)
+
+            # get from cache first
+            try:
+                project = Project.objects.get(pk=rcn)
+                # logging.debug(project)
+            except Project.DoesNotExist:
+
+                try:
+                    project = Project(rcn=rcn)
+                    project.parse_cordis()
+                    project.save()
+                except:
+                    # save erroneous project anyways
+                    project.save()
+                    pass
+
+            projects.append(project)
+        
+        serializer = ProjectSerializer(projects, many=True)
+        return Response(serializer.data)
+
+
+        # logging.debug(data)
+
+        # listingObj = Listing(data=data)
+        # serializer = ListingSerializer(listingObj)
+        # return Response(serializer.data)
+            # return l
+        # except:
+            # raise Http404
 
 # @api_view(('GET',))
 # def api_root(request, format=None):

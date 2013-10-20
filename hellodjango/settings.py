@@ -100,6 +100,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'hellodjango.urls'
@@ -128,6 +129,7 @@ INSTALLED_APPS = (
     'cordis',
     'parse_cordis',
     'south', # for easy migrations
+    'debug_toolbar',
 )
 
 REST_FRAMEWORK = {
@@ -214,3 +216,17 @@ except ImportError:
     DATABASES['default'] =  dj_database_url.config()
     pass
 
+# For debugging, see https://github.com/django-debug-toolbar/django-debug-toolbar
+INTERNAL_IPS = ('127.0.0.1',)
+
+DEBUG_TOOLBAR_PANELS = (
+    'debug_toolbar.panels.version.VersionDebugPanel',
+    'debug_toolbar.panels.timer.TimerDebugPanel',
+    'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
+    'debug_toolbar.panels.headers.HeaderDebugPanel',
+    'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
+    'debug_toolbar.panels.template.TemplateDebugPanel',
+    'debug_toolbar.panels.sql.SQLDebugPanel',
+    'debug_toolbar.panels.signals.SignalDebugPanel',
+    'debug_toolbar.panels.logger.LoggingPanel',
+)

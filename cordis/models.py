@@ -18,3 +18,8 @@ class Project(models.Model):
 
 	def __unicode__(self):
 		return str(self.rcn)
+
+
+# class Listing(object):
+# 	def __init__(self, data):
+# 		self.data = data
