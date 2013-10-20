@@ -34,44 +34,15 @@ class ProjectDetail(APIView):
             return Project.objects.get(pk=pk)
 
         except Project.DoesNotExist:
-            # try:
-            project = Project(rcn=pk)
-            project.parse_cordis()
-            project.save()
-            return project
-            # except:
-                # raise Http404
-
-    #     except Project.DoesNotExist:
-    #         project
-
-    #     try:
-    #         try:
-    #             project = Project.objects.get(pk=pk)
-    #             if reset:
-    #                 project.parse_cordis()
-    #                 project.save()
-                
-    #             # return project
-
-    #         except Project.DoesNotExist:
-				# # Parse on the fly now
-				# project = Project(rcn=pk)
-				# project.parse_cordis()
-				# project.save()
-				# # return project
-
-    #         return project
-
-	   #  except:
-	   #     raise Http404
+            try:
+                project = Project(rcn=pk)
+                project.parse_cordis()
+                project.save()
+                return project
+            except:
+                raise Http404
 
     def get(self, request, pk, format=None):
-
-        # if request.GET.get('reset', None):
-
-        # logging.debug(p)
-
         project = self.get_object(pk, request.GET.get('reset', None))
         serializer = ProjectSerializer(project)
         return Response(serializer.data)
@@ -84,6 +55,8 @@ class Search(APIView):
     def get(self, request, pk, count=10, format=None):
         # try:
         from parse_cordis import listing
+        reset = request.GET.get('reset', None)
+
         data = listing.parse(pk, count)
 
         projects = list()
@@ -91,12 +64,12 @@ class Search(APIView):
         # loop through data and save new project
         for rcn in data:
 
-            # logging.debug(rcn)
-
             # get from cache first
             try:
+                if reset:
+                    raise Project.DoesNotExist
+
                 project = Project.objects.get(pk=rcn)
-                # logging.debug(project)
             except Project.DoesNotExist:
 
                 try:
@@ -104,7 +77,7 @@ class Search(APIView):
                     project.parse_cordis()
                     project.save()
                 except:
-                    # save erroneous project anyways
+                    # save erroneous project anyways, we don't want to block on them always
                     project.save()
                     pass
 
