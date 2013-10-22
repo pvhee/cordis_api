@@ -14,12 +14,12 @@ class Project(models.Model):
 		from parse_cordis import project
 		self.data = project.parse(self.rcn)
 		# self.project_acronym = self.data
-		print "Parsed cordis and into model"
+		print "Stored " + str(self.rcn)
 
 	def __unicode__(self):
 		return str(self.rcn)
 
 
-# class Listing(object):
-# 	def __init__(self, data):
-# 		self.data = data
+class ProjectList(object):
+	def __init__(self, data):
+		self.data = data

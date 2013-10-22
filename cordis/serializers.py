@@ -8,5 +8,5 @@ class ProjectSerializer(serializers.Serializer):
     data = serializers.CharField()
 
 
-# class ListingSerializer(serializers.Serializer):
-# 	data = serializers.CharField()
+class ProjectListSerializer(serializers.Serializer):
+	data = serializers.CharField()

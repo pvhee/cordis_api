@@ -8,7 +8,9 @@ from rest_framework import renderers
 from rest_framework.reverse import reverse
 
 from cordis.models import Project
+from cordis.models import ProjectList
 from cordis.serializers import ProjectSerializer
+from cordis.serializers import ProjectListSerializer
 
 import logging
 
@@ -46,6 +48,22 @@ class ProjectDetail(APIView):
         project = self.get_object(pk, request.GET.get('reset', None))
         serializer = ProjectSerializer(project)
         return Response(serializer.data)
+
+class SearchList(APIView):
+    """
+    Retrieves project rcn's from a Cordis search. Add the search key obtained in the URL as the parameter to this search.
+    """ 
+    def get(self, request, pk, count=10, format=None):
+        from parse_cordis import listing
+        data = listing.parse(pk, count)
+        logging.debug(data)
+        l = ProjectList(data=data)
+
+        logging.debug(l)
+        serializer = ProjectListSerializer(l)
+        return Response(serializer.data)
+
+
 
 class Search(APIView):
     """
