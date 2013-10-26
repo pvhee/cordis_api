@@ -1,6 +1,8 @@
 from django.db import models
 from picklefield.fields import PickledObjectField
 
+import logging
+
 # Create your models here.
 
 class Project(models.Model):
@@ -11,8 +13,8 @@ class Project(models.Model):
 	data = PickledObjectField(null=True)
 
 	def parse_cordis(self):
-		from parse_cordis import project
-		self.data = project.parse(self.rcn)
+		from parse_cordis import project_xml
+		self.data = project_xml.parse(self.rcn)
 		# self.project_acronym = self.data
 		print "Stored " + str(self.rcn)
 
