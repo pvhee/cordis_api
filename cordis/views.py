@@ -29,7 +29,6 @@ class ProjectDetail(APIView):
     """	
 
     def get_object(self, pk, reset):
-
         try:
             if reset:
                 raise Project.DoesNotExist
