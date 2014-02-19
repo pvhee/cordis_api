@@ -14,10 +14,10 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': '/tmp/hellodjango',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+        # 'USER': '',
+        # 'PASSWORD': '',
+        # 'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        # 'PORT': '',                      # Set to empty string for default.
     }
 }
 
@@ -128,13 +128,14 @@ INSTALLED_APPS = (
     'rest_framework',
     'cordis',
     'parse_cordis',
-    'south', # for easy migrations
+    # 'south', # for easy migrations
     'debug_toolbar',
+    'django_extensions', # https://github.com/django-extensions/django-extensions
 )
 
 REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
-    'PAGINATE_BY': 10,
+    'PAGINATE_BY': 25,
 }
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
