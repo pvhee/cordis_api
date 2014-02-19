@@ -14,7 +14,7 @@ gunicorn==18.0
 htmllaundry==2.0
 jsonfield==0.9.19
 lxml==3.2.3
--e git://github.com/pvhee/parse_cordis.git#egg=parse_cordis-master
+-e git://github.com/openconsortium/parse_cordis.git#egg=parse_cordis-master
 psycopg2==2.5.1
 python-dateutil==2.1
 six==1.4.1
