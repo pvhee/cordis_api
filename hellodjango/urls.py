@@ -3,6 +3,7 @@ from rest_framework import routers
 from rest_framework.urlpatterns import format_suffix_patterns
 from cordis.models import Project
 from cordis import views
+from django.views.generic.base import RedirectView
 
 router = routers.DefaultRouter()
 
@@ -13,9 +14,9 @@ urlpatterns = patterns('cordis.views',
 	url(r'^cordis/1/search/(?P<pk>[\w\-]+)/(?P<count>[0-9]+)/$', views.Search.as_view()),
 	url(r'^cordis/1/search-list/(?P<pk>[\w\-]+)/$', views.SearchList.as_view()),
 	url(r'^cordis/1/search-list/(?P<pk>[\w\-]+)/(?P<count>[0-9]+)/$', views.SearchList.as_view()),
-    # @todo fix this, not sure why api_root doesn't work?
-    # url(r'^$', 'api_root'),
-    # url(r'^$', views.ProjectList.as_view()),
+
+	# Redirect to the projects overview, we don't (yet) have a homepage for this API
+	url(r'^$', RedirectView.as_view(url='/cordis/1/projects/')),
 )
 
 urlpatterns = format_suffix_patterns(urlpatterns)

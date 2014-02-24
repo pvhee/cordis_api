@@ -1,0 +1,14 @@
+{% extends "rest_framework/base.html" %}
+
+{% block branding %}<a class='brand' href='http://openconsortium.eu'>Open Consortium API <span class="version">{{ version }}</span></a>{% endblock %}
+
+{% block footer %}
+
+{% if GOOGLE_ANALYTICS_PROPERTY_ID %}
+  {% include "ga.html" %}
+{% endif %}
+
+<div id="footer">
+    Powered by <a class="powered-by" href='http://openconsortium.eu'>Open Consortium</a> and <a class="powered-by" href='http://django-rest-framework.org'>Django REST framework</a> &copy; 2014
+</div>
+{% endblock %}

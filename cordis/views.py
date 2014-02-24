@@ -16,7 +16,14 @@ import logging
 
 class ProjectList(APIView):
     """
-    List all projects in the local cache
+    List all <a href="http://cordis.europa.eu" target="_blank">Cordis projects</a> in the database.
+
+    All projects are identified with a RCN (record control number). For example, check out the <a href="http://cordis.europa.eu/projects/latest-projects_en.html" target="_blank">latest projects</a>
+    added to the Cordis database, look for the RCN (e.g. <i>105229</i> from <a href="http://cordis.europa.eu/projects/rcn/105229_en.html">POCAONTAS</a>), and construct the API call as follows:
+
+    <a href="http://api.openconsortium.eu/cordis/1/projects/105229">http://api.openconsortium.eu/cordis/1/projects/105229</a>
+
+    The page returns a HTML and a JSON (append <span class="prettyprint">?format=json</span>) version of the data from the Cordis database that is cached in the database for easy reference.
     """
     def get(self, request, format=None):
         projects = Project.objects.all()

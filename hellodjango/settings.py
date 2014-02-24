@@ -1,4 +1,5 @@
 # Django settings for hellodjango project.
+import os.path
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -12,7 +13,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/tmp/hellodjango',                      # Or path to database file if using sqlite3.
+        'NAME': '/tmp/hellodjango'                 # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         # 'USER': '',
         # 'PASSWORD': '',
@@ -92,6 +93,18 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+    'hellodjango.context_processors.google_analytics',
+    'hellodjango.context_processors.general_settings',
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -112,6 +125,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join(os.path.dirname(__file__), 'templates').replace('\\','/'),
 )
 
 INSTALLED_APPS = (
@@ -128,6 +142,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'cordis',
     'parse_cordis',
+    # 'pages', # for static content
     # 'south', # for easy migrations
     'debug_toolbar',
     'django_extensions', # https://github.com/django-extensions/django-extensions
@@ -231,3 +246,7 @@ DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.signals.SignalDebugPanel',
     'debug_toolbar.panels.logger.LoggingPanel',
 )
+
+GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-31959684-5'
+GOOGLE_ANALYTICS_DOMAIN = 'openconsortium.eu'
+
