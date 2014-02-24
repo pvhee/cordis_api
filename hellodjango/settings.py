@@ -1,11 +1,11 @@
 # Django settings for hellodjango project.
 import os.path
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+DEBUG = False
+# TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Peter Vanhee', 'peter@marzeelabs.org'),
 )
 
 MANAGERS = ADMINS
@@ -111,8 +111,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
@@ -220,7 +218,7 @@ STATICFILES_DIRS = (
 # and settings common to all development machines eg. 
 # INSTALLED_APPS, TEMPLATE_DIRS, MIDDLEWARE_CLASSES etc.
 
-# Import local_settings at the very bottom of the file
+# Import local_settings at the very bottom of the files
 # Use try|except block since we won't have this on the production server, 
 # only on dev machines
 try:
