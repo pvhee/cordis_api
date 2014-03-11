@@ -16,7 +16,7 @@ urlpatterns = patterns('cordis.views',
 	url(r'^cordis/1/search-list/(?P<pk>[\w\-]+)/(?P<count>[0-9]+)/$', views.SearchList.as_view()),
 
 	# Redirect to the projects overview, we don't (yet) have a homepage for this API
-	url(r'^$', RedirectView.as_view(url='/cordis/1/projects/')),
+	url(r'^$', RedirectView.as_view(url='/cordis/1/projects/105875')),
 )
 
 urlpatterns = format_suffix_patterns(urlpatterns)
