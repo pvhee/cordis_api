@@ -226,8 +226,8 @@ try:
 except ImportError:
     # For Heroku, https://devcenter.heroku.com/articles/getting-started-with-django
     # Parse database configuration from $DATABASE_URL
-    # import dj_database_url
-    # DATABASES['default'] =  dj_database_url.config()
+    import dj_database_url
+    DATABASES['default'] =  dj_database_url.config()
     
 
     # DATABASES = {
@@ -267,3 +267,4 @@ DEBUG_TOOLBAR_PANELS = (
 GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-31959684-5'
 GOOGLE_ANALYTICS_DOMAIN = 'openconsortium.eu'
 
+# 
